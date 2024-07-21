@@ -3,11 +3,13 @@ import { sanityClient } from "sanity:client";
 import Header from "../components/Header.astro";
 import Card from "../components/Professional.astro";
 import Layout from "../layouts/Layout.astro";
+// import Search from "../components/Search.astro";
 
 import { type Professional } from "../types";
 
 const professionals: Professional[] = await sanityClient.fetch(`
   *[_type=="professional"]{
+    _id,
     name,
     lastname,
     phone,
@@ -22,14 +24,16 @@ const professionals: Professional[] = await sanityClient.fetch(`
 
 <Layout title="LuganoConecta">
   <Header />
-  <main class="max-w-4xl mx-auto">
+  <main class="max-w-screen-2xl mx-auto text-center md:text-left">
+    <!-- <Search /> -->
     <h2 class="text-2xl font-semibold mb-4">Profesionales Registrados</h2>
-    <section class="space-y-3">
+
+    <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
       {
         professionals.map((professional) => (
           <Card professional={professional} />
         ))
       }
-    </section>
+    </div>
   </main>
 </Layout>

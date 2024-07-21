@@ -1,4 +1,5 @@
 export interface Professional {
+  _id?: string;
   name?: string;
   lastname?: string;
   phone?: string;
