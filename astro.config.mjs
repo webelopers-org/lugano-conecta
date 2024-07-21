@@ -7,7 +7,7 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://astro-sanity.netlify.app",
+  site: "https://luganoconecta.app/",
   integrations: [
     tailwind(),
     sanity({
