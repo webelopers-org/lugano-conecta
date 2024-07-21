@@ -2,12 +2,22 @@
 import Chip from "./Chip.astro";
 
 import { type Professional } from "../types";
+import { string } from "astro/zod";
 
 interface Props {
   professional: Professional;
 }
 
 const { professional } = Astro.props;
+
+const shareMessage = `Encontré este profesional en LuganoConecta! -> ${Astro.url.href}
+
+  *${professional.fantasyName}*
+  _${professional.name} ${professional.lastname}_
+  ${professional.services?.map((service) => service?.name).join(", ")}
+  ${professional.email ? `Email: ${professional.email}` : ""}
+  ${professional.phone ? `Teléfono: ${professional.phone}` : ""}
+`;
 ---
 
 <div class="bg-white rounded-lg shadow-md p-6 space-y-2">
@@ -38,7 +48,7 @@ const { professional } = Astro.props;
             WhatsApp!
           </a>
           <a
-            href={`https://wa.me/?text=Te%20comparto%20este%20profesional%20del%20barrio!%20${professional.phone}`}
+            href={`https://wa.me/?text=${encodeURIComponent(shareMessage)}`}
             target="_blank"
             class="button"
           >
