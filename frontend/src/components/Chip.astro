@@ -1,0 +1,13 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<span
+  class="px-2 py-1 rounded-full text-xs font-semibold mr-2 mb-2 inline-block bg-gray-100 text-gray-800"
+>
+  {label.toLowerCase()}
+</span>
