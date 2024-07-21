@@ -1,24 +1,57 @@
 ---
 import Chip from "./Chip.astro";
+
+import { type Professional } from "../types";
+
+interface Props {
+  professional: Professional;
+}
+
+const { professional } = Astro.props;
 ---
 
-<div class="bg-white rounded-lg shadow-md p-6">
-  <h3 class="font-semibold text-lg">Lorem, ipsum.</h3>
-  <div class="mb-2">
-    <Chip label="plomero" />
+<div class="bg-white rounded-lg shadow-md p-6 space-y-2">
+  <h3 class="font-semibold text-xl">{professional.fantasyName}</h3>
+  <h4 class="font-extralight text-lg">
+    {professional.name}
+    {professional.lastname}
+  </h4>
+  <div class="">
+    {professional.services?.map((service) => <Chip label={service?.name} />)}
   </div>
-  <div class="flex items-center gap-4 mb-2">
-    <div><a href="tel:12-12341234">12-12341234</a></div>
-    <div><a href="mailto:profesional@mail.com">profesional@mail.com</a></div>
-  </div>
-  <div>
-    <strong class="text-sm text-gray-700"> Servicios: </strong>
-    <ul class="list-disc list-inside text-sm text-gray-600 ml-2">
-      <li>lorem</li>
-      <li>lorem</li>
-      <li>lorem</li>
-      <li>lorem</li>
-      <li>lorem</li>
-    </ul>
+  <div class="flex gap-4 border-t p-4">
+    {
+      professional.email && (
+        <a href={`mailto:${professional.email}`} target="_blank" class="button">
+          Contactar por email!
+        </a>
+      )
+    }
+    {
+      professional.phone && (
+        <>
+          <a
+            href={`https://wa.me/${professional.phone}`}
+            target="_blank"
+            class="button"
+          >
+            Contactar por WhatsApp!
+          </a>
+          <a
+            href={`https://wa.me/?text=Te%20comparto%20este%20profesional%20del%20barrio!%20${professional.phone}`}
+            target="_blank"
+            class="button"
+          >
+            Compartir!
+          </a>
+        </>
+      )
+    }
   </div>
 </div>
+
+<style>
+  .button {
+    @apply px-2 py-1 rounded-md text-xs font-semibold inline-block bg-yellow-300 text-gray-600 hover:bg-yellow-500 hover:text-gray-800 transition-colors;
+  }
+</style>

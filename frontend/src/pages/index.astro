@@ -1,8 +1,23 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { sanityClient } from "sanity:client";
 import Header from "../components/Header.astro";
-import Chip from "../components/Chip.astro";
 import Card from "../components/Professional.astro";
+import Layout from "../layouts/Layout.astro";
+
+import { type Professional } from "../types";
+
+const professionals: Professional[] = await sanityClient.fetch(`
+  *[_type=="professional"]{
+    name,
+    lastname,
+    phone,
+    email,
+    fantasyName,
+    services[]->{
+      name
+    }
+  }
+`);
 ---
 
 <Layout title="LuganoConecta">
@@ -10,16 +25,11 @@ import Card from "../components/Professional.astro";
   <main class="max-w-4xl mx-auto">
     <h2 class="text-2xl font-semibold mb-4">Profesionales Registrados</h2>
     <section class="space-y-3">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {
+        professionals.map((professional) => (
+          <Card professional={professional} />
+        ))
+      }
     </section>
   </main>
 </Layout>
